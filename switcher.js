@@ -222,7 +222,7 @@ switcher.prototype = {
 			this._checkChanged();
 		}
 
-		this.fire('switch',this._panes[2], this._index-1);
+		this.fire('switch',this._panes[2]);
 		this._panes.unshift( this._panes.pop() );
 	},
 	_swRight:function(){
@@ -237,7 +237,7 @@ switcher.prototype = {
 			this._checkChanged();
 		}
 		
-		this.fire('switch',this._panes[0], this._index+1);
+		this.fire('switch',this._panes[0]);
 		this._panes.push( this._panes.shift() );
 	},
 	_getCenterOffset:function(){		
@@ -289,18 +289,23 @@ switcher.prototype = {
 	setList:function(list){
 		this._items = list;
 	},
+
+
+
 	getItemForPane:function(pane){
 		return this._getListItem(parseInt(pane.attr('sw-index')));
 	},
-	getListItem:function(){
+	getListItem:function(index){
+		if (index === undefined){
+			indes = this._index;
+		}
 		if (this._items.length > 0){
-			return this._getListItem( this._index );
+			return this._getListItem( index );
 		} else {
 			return this._index;
 		}
 	},
 	_getListItem:function(index){
-		index = parseInt(index);
 		if (this._items.length > 0){		
 			if (index >= this._items.length){
 				return this._getListItem( index - this._items.length);
