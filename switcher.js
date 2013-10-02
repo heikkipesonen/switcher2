@@ -147,8 +147,8 @@ switcher.prototype = {
 			}
 		}
 		this._setIndex();
-		this._prevCenter = this._panes[1];
-		this.fire('change',this._panes);
+		
+		this.fire('change',this._panes,this._index);
 		this.fire('start',this._panes);		
 	},
 	getPanes:function(){
@@ -252,8 +252,9 @@ switcher.prototype = {
 		this.fire('prev', this._panes[0] );
 	},
 	_checkChanged:function(){
+
 		if (this._prevCenter != this._panes[1]){
-			this.fire('change',this._panes,this._panes[1].attr('sw-index'));		
+			this.fire('change',this._panes,this._index);		
 			this._prevCenter = this._panes[1];			
 		}
 
@@ -289,16 +290,22 @@ switcher.prototype = {
 	setList:function(list){
 		this._items = list;
 	},
+	getList:function(){
+		return this._items;
+	},
 
 
-
+	getIndex:function(){
+		return this._index;
+	},
 	getItemForPane:function(pane){
 		return this._getListItem(parseInt(pane.attr('sw-index')));
 	},
 	getListItem:function(index){
 		if (index === undefined){
-			indes = this._index;
+			index = this._index;
 		}
+
 		if (this._items.length > 0){
 			return this._getListItem( index );
 		} else {
